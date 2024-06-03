@@ -10,15 +10,15 @@ export interface UsuarioLogin {
 
 export interface Usuario {
     id?: number;
-    nome: string;
-    usuario: string;
-    senha: string;
+    nome?: string;
+    usuario?: string;
+    senha?: string;
     tipo?: string;
-    foto: string;
+    foto?: string;
 }
 
 export interface temaInterface {
-    id: number,
+    id?: number,
     description?: string,
     postagem?: []
 }

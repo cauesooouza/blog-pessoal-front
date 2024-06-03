@@ -34,8 +34,8 @@ export default function Publicar() {
     text: '',
     date: formattedDate,
     foto: '',
-    tema: 0,
-    usuario: usuario.id
+    tema: {},
+    usuario: {}
   })
 
   const [novoTema, setNovoTema] = useState<temaInterface>({ description: '' })
