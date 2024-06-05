@@ -8,6 +8,7 @@ import Publicar from "./pages/publicar";
 import Remover from "./pages/remover";
 import NotFound from "./pages/notfound";
 import { AuthProvider } from "./contexts/authcontext";
+import Perfil from "./pages/perfil";
 
 
 function AppRoutes() {
@@ -22,6 +23,7 @@ function AppRoutes() {
           <Route path="/cadastre" element={<Cadastre />} />
           <Route path="/publicar" element={<Publicar />} />
           <Route path="/remover" element={<Remover />} />
+          <Route path="/perfil" element={<Perfil />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

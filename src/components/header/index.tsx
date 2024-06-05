@@ -78,6 +78,9 @@ export default function Header() {
               <Link to="/remover">
                 Remover
               </Link>
+              <Link to="/perfil">
+                Perfil
+              </Link>
             </>
           }
         </div>

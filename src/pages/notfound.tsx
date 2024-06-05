@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 export default function NotFound() {
     return (
         <>
-        <Helmet>
-            <title>Pagina não encontrada</title>
-        </Helmet>
+            <Helmet>
+                <title>Pagina não encontrada</title>
+            </Helmet>
             <div className="container flex flex-col md:flex-row items-center justify-center px-5 text-gray-700 h-[80svh]">
                 <div className="max-w-md">
                     <div className="text-5xl font-dark font-bold">404</div>
@@ -15,7 +15,6 @@ export default function NotFound() {
                     >Desculpe, não conseguimos encontrar esta página. </p>
                     <p className="mb-8">Mas não se preocupe, você pode encontrar muitas outras coisas em nossa página inicial.</p>
 
-                    <Link to='/' className="px-4 inline py-2 text-sm font-medium leading-5 shadow text-white transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-blue bg-blue-600 active:bg-blue-600 hover:bg-blue-700">back to homepage</Link>
                 </div>
                 <div className="max-w-lg">
                     <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2395 1800" width="400">
