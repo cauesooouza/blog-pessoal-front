@@ -39,9 +39,5 @@ export const deleteTema = async (url: string, config: AxiosRequestConfig): Promi
 }
 
 export const deletePost = async (url: string, config: AxiosRequestConfig): Promise<void> => {
-    try {
-        await api.delete(url, config);
-    } catch (error) {
-        console.error(error);
-    }
+    return await api.delete(url, config);
 }

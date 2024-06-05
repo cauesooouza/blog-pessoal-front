@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router-dom"
 import { postInterface, temaInterface } from "../models/models";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { api, publicarPostagem, publicarTema } from "../services/api";
 import { AuthContext } from "../contexts/authcontext";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Publicar() {
   const currentDate = new Date();
@@ -13,8 +14,6 @@ export default function Publicar() {
   const hours = String(currentDate.getHours()).padStart(2, '0');
   const minutes = String(currentDate.getMinutes()).padStart(2, '0');
   const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-
-  let navigate = useNavigate()
 
   const [temas, setTemas] = useState<Array<temaInterface>>();
 
@@ -35,11 +34,11 @@ export default function Publicar() {
     date: formattedDate,
     foto: '',
     tema: {},
-    usuario: {}
+    usuario: usuario
   })
 
   const [novoTema, setNovoTema] = useState<temaInterface>({ description: '' })
-
+  const notify = (content: string, options: object) => toast(content, options);
 
   function atualizarEstadoPostagem(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setPostagem({
@@ -53,9 +52,10 @@ export default function Publicar() {
 
     try {
       await publicarPostagem(`/posts`, postagem, { headers: { Authorization: usuario.token } })
-      navigate('/')
+      notify("Publicado com sucesso!", { type: 'success' })
     } catch (error) {
       console.error(error)
+      notify("Erro, não foi possivel publicar", { type: 'error' })
     }
   }
 
@@ -71,9 +71,10 @@ export default function Publicar() {
 
     try {
       await publicarTema(`/tema`, novoTema, { headers: { Authorization: usuario.token } })
-      navigate('/')
+      notify("Publicado com sucesso!", { type: 'success' })
     } catch (error) {
       console.error(error)
+      notify("Erro, não foi possivel publicar", { type: 'error' })
     }
   }
 
@@ -195,6 +196,7 @@ export default function Publicar() {
             </button>
           </div>
         </form>
+        <ToastContainer />
       </main>
     </>
   )

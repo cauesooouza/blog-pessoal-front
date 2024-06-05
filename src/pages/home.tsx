@@ -6,8 +6,6 @@ import { postInterface } from "../models/models";
 
 export default function Home() {
 
-
-
   const [posts, setPosts] = useState<Array<postInterface>>();
 
   useEffect(() => {
@@ -18,7 +16,6 @@ export default function Home() {
 
     getPosts()
   }, [])
-
 
   function formatDate(dateString: string) {
     const date = new Date(dateString);
@@ -33,7 +30,6 @@ export default function Home() {
     return `${formattedDay}-${formattedMonth}-${year}`;
   }
 
-
   return (
     <>
       <Helmet>
@@ -42,12 +38,9 @@ export default function Home() {
       <main className="container px-3 grid sm:grid-cols-[3fr_1fr] grid-cols-1 gap-4 my-5 min-h-[80svh]">
         <section className="flex flex-col gap-7">
           {posts?.map((post: postInterface, index) => (
-            <ShowPost principal={{ titulo: post.titulo, desc: post.text, info: `${post.usuario.nome} - ${formatDate(post.date)}`, image: post.foto }}
+            <ShowPost principal={{ titulo: post.titulo, desc: post.text, info: `${post.usuario?.nome} - ${formatDate(post.date)}`, image: post.foto }}
               tema={post.tema.description} key={index} />
           ))}
-
-
-
         </section>
 
         <aside className="flex flex-col gap-5">

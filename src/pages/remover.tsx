@@ -2,17 +2,17 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { postInterface, temaInterface } from "../models/models";
 import { api, deletePost, deleteTema } from "../services/api";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/authcontext";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Remover() {
 
   const { usuario } = useContext(AuthContext);
-
-  const navigate = useNavigate();
+  const notify = (content: string, options: object) => toast(content, options);
 
   const [temas, setTemas] = useState<Array<temaInterface>>();
   const [temaExcluido, setTemaExcluido] = useState<temaInterface>({ id: 0 })
+  const [getTemaAgain, setGetTemaAgain] = useState(0);
 
   useEffect(() => {
     const getTemas = async () => {
@@ -20,7 +20,7 @@ export default function Remover() {
       setTemas(data);
     }
     getTemas()
-  }, [])
+  }, [getTemaAgain])
 
   function atualizarEstadoTema(e: ChangeEvent<HTMLSelectElement>) {
     setTemaExcluido({
@@ -34,14 +34,18 @@ export default function Remover() {
 
     try {
       await deleteTema(`/tema/${temaExcluido.id}`, { headers: { Authorization: usuario.token } })
-      navigate('/')
+      notify("Removido com sucesso!", { type: 'success' })
+      setGetTemaAgain(getTemaAgain+ 1);
     } catch (error) {
       console.error(error)
+      notify("Erro, não foi possivel remover", { type: 'error' })
     }
   }
 
   const [posts, setPosts] = useState<Array<postInterface>>();
   const [postExcluido, setPostExcluido] = useState({ id: 0 })
+  const [getPostAgain, setGetPostAgain] = useState(0);
+
 
   useEffect(() => {
     const getPosts = async () => {
@@ -50,9 +54,10 @@ export default function Remover() {
     }
 
     getPosts()
-  }, [])
+  }, [getPostAgain])
 
   function atualizarEstadoPost(e: ChangeEvent<HTMLSelectElement>) {
+    console.log('função estado post')
     setPostExcluido({
       ...postExcluido,
       [e.target.name]: Number(e.target.value)
@@ -61,14 +66,19 @@ export default function Remover() {
 
   async function excluirPost(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault()
+    console.log('função excluir post')
 
     try {
       await deletePost(`/posts/${postExcluido.id}`, { headers: { Authorization: usuario.token } })
-      navigate('/')
+      notify("Removido com sucesso!", { type: 'success' })
+      setGetPostAgain(getPostAgain +1);
     } catch (error) {
       console.error(error)
+      notify("Erro, não foi possivel remover", { type: 'error' })
     }
   }
+
+  console.log(postExcluido.id)
 
   return (
     <>
@@ -118,11 +128,12 @@ export default function Remover() {
             </select>
           </div>
           <div className="flex items-center justify-between">
-            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" >
               Excluir
             </button>
           </div>
         </form>
+        <ToastContainer />
       </main>
     </>
   )
